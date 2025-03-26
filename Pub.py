@@ -1,4 +1,20 @@
 import paho.mqtt.client as mqtt
+    """
+    The Python script sets up an MQTT client to receive and save images sent over a specified topic.
+    
+    :param client: The `client` parameter in the code snippet refers to the MQTT client instance created
+    using the `mqtt.Client` class from the `paho.mqtt.client` module. This client is responsible for
+    connecting to the MQTT broker, subscribing to topics, publishing messages, and handling incoming
+    messages
+    :param userdata: The `userdata` parameter in the `on_message` function is a user-defined data of any
+    type that can be passed to the MQTT client when setting up the callback functions. It allows you to
+    pass additional information or context to the callback function when handling messages. This
+    parameter is optional and can be used
+    :param message: The `message` parameter in the `on_message` function is of type `mqtt.MQTTMessage`
+    and represents the message instance containing the payload received from the MQTT broker. It
+    contains information such as the payload data, topic, QoS level, and other message attributes. In
+    this context,
+    """
 import numpy as np
 import cv2
 import time
@@ -35,10 +51,10 @@ client.on_message = on_message
 client.connect(BROKER, 1883, 60)
 
 # Subscribe to receive image data
-client.subscribe(IMAGE_TOPIC)
+client.subscribe(IMAGE_TOPIC, qos=1)
 
 print("Sending capture command...")
-client.publish(CAPTURE_TOPIC, "Capture Now")
+client.publish(CAPTURE_TOPIC, "Capture Now", qos=1)
 
 # Start listening for the images
 print("Waiting for image...")

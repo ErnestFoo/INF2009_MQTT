@@ -33,7 +33,7 @@ def on_message(client, userdata, message):
     img_bytes = buffer.tobytes()
 
     # Publish the image bytes
-    client.publish(IMAGE_TOPIC, img_bytes)
+    client.publish(IMAGE_TOPIC, img_bytes, qos=1)
     print("Image published successfully.")
 
 # Setup MQTT Client
@@ -42,7 +42,7 @@ client.on_message = on_message
 client.connect(BROKER, 1883, 60)
 
 # Subscribe to the capture command topic
-client.subscribe(CAPTURE_TOPIC)
+client.subscribe(CAPTURE_TOPIC, qos=1)
 
 print("Waiting for capture command...")
 
